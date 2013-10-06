@@ -50,3 +50,20 @@ def get_quart_earning_surprise(symbol):
                 surprises[quarter] = surprise
 
     return surprises
+
+
+def get_eps_forecast(symbol):
+    soup = get_soup("http://www.nasdaq.com/symbol/" + symbol + "/earnings-forecast")
+
+    forecasts = {}
+
+    forecast_table = soup.find("table", {"class": "earningsurprise"})
+    rows = forecast_table.findAll("tr")
+    for i in range(1, len(rows)):
+        cols = rows[i].findAll("td")
+        year = cols[0].getText()
+        year = year[len(year)-4:]
+        forecast = cols[1].getText()
+        forecasts[str(year)] = str(forecast)
+
+    return forecasts
