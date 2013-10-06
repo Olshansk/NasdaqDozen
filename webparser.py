@@ -1,4 +1,4 @@
-__author__ = 'michaellin'
+__author__ = 'linmichaelj'
 
 import urllib2
 from bs4 import BeautifulSoup
@@ -67,3 +67,10 @@ def get_eps_forecast(symbol):
         forecasts[str(year)] = str(forecast)
 
     return forecasts
+
+
+def get_industry_pe(symbol):
+    soup = "http://finance.yahoo.com/q/in?s=" + symbol + "+Industry"
+
+    industry_table = soup.find("table", {"class": "yfnc_datamodoutline1"})
+    industry_url = industry_table.

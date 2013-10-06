@@ -1,4 +1,4 @@
-__author__ = 'michaellin'
+__author__ = 'linmichaelj'
 
 import Quandl
 import sys
@@ -46,6 +46,23 @@ def roe_test(symbl):
         return True, years_increasing
     else:
         return False, years_increasing
+
+
+def peg_test(symbl):
+    rev_data_frame = Quandl.get('OFDP/DMDRN_' + symbl + '_PE_G')
+    rev_series = rev_data_frame['PE to Growth Ratio']
+
+    years = 0
+    for i in reversed(rev_series):
+        if i > 1:
+            years += 1
+        else:
+            break
+
+    if rev_series[-1] > 1:
+        return True, years
+    else:
+        return False, years
 
 
 def get_years_increasing(arr):
