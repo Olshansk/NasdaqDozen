@@ -16,7 +16,7 @@ def get_recommendation(symbol):
     data_tables = soup.findAll("table", {"class": "yfnc_datamodoutline1"})
 
     #Look at Recommendation Summary
-    mean_recommendation = data_tables[0].find("td", {"class": "yfnc_tabledata1"}).getText()
+    mean_recommendation = str(data_tables[0].find("td", {"class": "yfnc_tabledata1"}).getText())
 
     recommendations = {}
 
@@ -33,4 +33,20 @@ def get_recommendation(symbol):
     return mean_recommendation, recommendations
 
 
-def 
+def get_quart_earning_surprise(symbol):
+    soup = get_soup("http://www.nasdaq.com/symbol/" + symbol + "/earnings-surprise")
+
+    surprises = {}
+
+    surprise_table = soup.find("table", {"class": "earningsurprise"})
+    for row in surprise_table.findAll("tr"):
+
+        cols = row.findAll("td")
+        if len(cols) == 5:
+            quarter = str(cols[0].getText())
+            surprise = str(cols[4].getText())
+            
+            if quarter != "FiscalQuarter End":
+                surprises[quarter] = surprise
+
+    return surprises
