@@ -36,7 +36,7 @@ def get_recommendation(symbol):
 def get_quart_earning_surprise(symbol):
     soup = get_soup("http://www.nasdaq.com/symbol/" + symbol + "/earnings-surprise")
 
-    surprises =
+    surprises = {}
 
     surprise_table = soup.find("table", {"class": "earningsurprise"})
     for row in surprise_table.findAll("tr"):
